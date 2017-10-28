@@ -8,8 +8,8 @@ module.exports = function(deployer) {
 //  deployer.deploy(ConvertLib);
 //  deployer.link(ConvertLib, MetaCoin);
 //  deployer.deploy(MetaCoin);
-    deployer.deploy(SampleCrowdSaleToken, {gas:1000000000});
-    deployer.deploy(SampleCrowdSale, {gas:1000000000});
+    deployer.deploy(SampleCrowdSaleToken, {gas:1e6});
+    deployer.deploy(SampleCrowdSale,{gas:6030000});
 
     
     deployer.deploy(Hello);
