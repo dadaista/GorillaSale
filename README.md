@@ -4,8 +4,9 @@ A simple eth tokensale based on Open Zeppelin
 
 # How to
 
-Install truffle if you don't have it already
-Install testrpc if you don't have it already
+Install truffle framework if you don't have it already
+
+Install ethereumjs-testrpc if you don't have it already
 
 type
 
