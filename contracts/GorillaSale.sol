@@ -16,22 +16,16 @@ import "./GorillaToken.sol";
  * After adding multiple features it's good practice to run integration tests
  * to ensure that subcontracts works together as intended.
  */
-contract GorillaSale is CappedCrowdsale, RefundableCrowdsale {
+contract GorillaSale is Crowdsale {
 
-  function GorillaSale(uint256 _startTime, 
-                           uint256 _endTime, 
+  function GorillaSale(    uint256 _time_start,
+                           uint256 _time_end,
                            uint256 _rate, 
-                           uint256 _goal, 
-                           uint256 _cap, 
                            address _wallet)
-    CappedCrowdsale(_cap)
-    FinalizableCrowdsale()
-    RefundableCrowdsale(_goal)
-    Crowdsale(_startTime, _endTime, _rate, _wallet)
+
+    Crowdsale(_time_start, _time_start, _rate, _wallet)
   {
-    //As goal needs to be met for a successful crowdsale
-    //the value needs to less or equal than a cap which is limit for accepted funds
-    require(_goal <= _cap);
+
   }
 
   function createTokenContract() internal returns (MintableToken) {
