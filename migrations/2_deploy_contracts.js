@@ -10,14 +10,23 @@ module.exports = function(deployer,network,accounts) {
 //  deployer.deploy(MetaCoin);
 
 
-  const startTime = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 1 // one second in the future
-  const endTime = startTime + (86400 * 20) // 20 days
-  const rate = new web3.BigNumber(1000)
+  const startTime = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 120; // 2m  in the future
+
+
+  console.log("starttime is:"+startTime);
+  const endTime = startTime + (86400 * 30); // 30 days
+  console.log("endTime is:"+endTime);
+
+  const rate = 100;
   const wallet = accounts[0]
 
 
-  //deployer.deploy(Token, {gas:1e6});
-  deployer.deploy(Sale, startTime, endTime, rate, wallet,{gas:6030000});
+ 
+  deployer.deploy(Sale, new web3.BigNumber(startTime), 
+                        new web3.BigNumber(endTime), 
+                        new web3.BigNumber(rate), 
+                        wallet);
+
 
     
   //deployer.deploy(Hello);

@@ -1,4 +1,4 @@
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.15;
 
 import "zeppelin-solidity/contracts/crowdsale/CappedCrowdsale.sol";
 import "zeppelin-solidity/contracts/crowdsale/RefundableCrowdsale.sol";
@@ -23,7 +23,7 @@ contract GorillaSale is Crowdsale {
                            uint256 _rate, 
                            address _wallet)
 
-    Crowdsale(_time_start, _time_start, _rate, _wallet)
+    Crowdsale(_time_start, _time_end, _rate, _wallet)
   {
 
   }
