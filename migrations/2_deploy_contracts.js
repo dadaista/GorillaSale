@@ -14,11 +14,11 @@ module.exports = function(deployer,network,accounts) {
 
 
   console.log("starttime is:"+startTime);
-  const endTime = startTime + (86400 * 30); // 30 days
+  const endTime = startTime + (86400 * 365); // 365 days
   console.log("endTime is:"+endTime);
 
-  const rate = 100;
-  const wallet = accounts[0]
+  const rate = 3;
+  const wallet = accounts[0];
 
 
  
