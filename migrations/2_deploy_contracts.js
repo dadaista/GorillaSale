@@ -1,6 +1,7 @@
 //var ConvertLib = artifacts.require("./ConvertLib.sol");
 //var MetaCoin = artifacts.require("./MetaCoin.sol");
-var Sale = artifacts.require("./GorillaSale.sol");
+//var Sale = artifacts.require("./GorillaSale.sol");
+var OranguSale = artifacts.require("./OranguSale.sol");
 //var Token = artifacts.require("./GorillaToken.sol");
 //var Hello = artifacts.require("./Hello.sol");
 
@@ -22,11 +23,21 @@ module.exports = function(deployer,network,accounts) {
 
 
  
-  deployer.deploy(Sale, new web3.BigNumber(startTime), 
-                        new web3.BigNumber(endTime), 
-                        new web3.BigNumber(rate), 
-                        wallet);
+//  deployer.deploy(Sale, new web3.BigNumber(startTime), 
+//                        new web3.BigNumber(endTime), 
+//                        new web3.BigNumber(rate), 
+//                        wallet);
 
+  const preminedOwner = accounts[0];
+  const cap = 100000 * 10**18;//100keth
+  const premined = 1000 * 10**15// 1k tokens are premined
+  deployer.deploy(OranguSale, new web3.BigNumber(startTime), 
+                              new web3.BigNumber(endTime), 
+                              new web3.BigNumber(rate), 
+                              wallet,
+                              preminedOwner,
+                              cap,
+                              premined);
 
     
   //deployer.deploy(Hello);
