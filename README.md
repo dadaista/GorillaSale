@@ -4,26 +4,10 @@ A simple eth tokensale based on Open Zeppelin
 
 # How to
 
-Install truffle framework if you don't have it already
-
-Install ethereumjs-testrpc if you don't have it already
-
-type
+to run and deploy this code on Ropsten please refer to the README of this project
 
 
-```
-> testrpc -l 9879870
-```
-
-which starts the test blockchain with gas limit of 9879870 per block (choose your gas limit, this works for me)
-
-from GorillaSale dir type
-
-```
-> truffle migrate --reset
-```
+https://github.com/dadaista/ChimpToken
 
 
-This will compile all and launch contracts on the testrpc blockchain.
-
-
+Instruction to run on testrpc will follow soon.
