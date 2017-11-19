@@ -18,7 +18,10 @@ module.exports = function(deployer,network,accounts) {
   const endTime = startTime + (86400 * 365); // 365 days
   console.log("endTime is:"+endTime);
 
-  const rate = 3;
+  const maxrate = 6;
+  const rate = 4;
+  const minrate = 2;
+
   const wallet = accounts[0];
 
 
@@ -34,6 +37,8 @@ module.exports = function(deployer,network,accounts) {
   deployer.deploy(OranguSale, new web3.BigNumber(startTime), 
                               new web3.BigNumber(endTime), 
                               new web3.BigNumber(rate), 
+                              new web3.BigNumber(maxrate), 
+                              new web3.BigNumber(minrate), 
                               wallet,
                               preminedOwner,
                               cap,

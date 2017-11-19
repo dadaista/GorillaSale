@@ -1,0 +1,30 @@
+{
+  "name": "gorilla-sale",
+  "version": "1.0.0",
+  "description": "A simple eth tokensale based on Open Zeppelin",
+  "main": "truffle.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "zeppelin-solidity": "^1.3.0"
+  },
+  "devDependencies": {
+    "chai": "^4.0.2",
+    "chai-as-promised": "^7.0.0",
+    "chai-bignumber": "^2.0.0"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dadaista/GorillaSale.git"
+  },
+  "author": "dadabit",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dadaista/GorillaSale/issues"
+  },
+  "homepage": "https://github.com/dadaista/GorillaSale#readme"
+}

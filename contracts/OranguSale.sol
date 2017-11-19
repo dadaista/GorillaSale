@@ -2,6 +2,7 @@ pragma solidity ^0.4.15;
 
 import "zeppelin-solidity/contracts/crowdsale/CappedCrowdsale.sol";
 import "zeppelin-solidity/contracts/ownership/Ownable.sol";
+import "zeppelin-solidity/contracts/lifecycle/Pausable.sol";
 import "./GorillaToken.sol";
 
 
@@ -15,19 +16,27 @@ import "./GorillaToken.sol";
  * After adding multiple features it's good practice to run integration tests
  * to ensure that subcontracts works together as intended.
  */
-contract OranguSale is CappedCrowdsale,Ownable {
+contract OranguSale is CappedCrowdsale,Ownable, Pausable {
 
+  uint256  public MAXRATE;
+  uint256  public MINRATE;
   function OranguSale(     uint256 _time_start,
                            uint256 _time_end,
-                           uint256 _rate,   
+                           uint256 _rate,
+                           uint256 _maxrate,
+                           uint256 _minrate,   
                            address _wallet,
                            address _preminedOwner,
                            uint256 _cap,
-			   uint256 _premined)
+			                     uint256 _premined)
   
   CappedCrowdsale(_cap)
   Crowdsale(_time_start, _time_end, _rate, _wallet)
   {
+      MAXRATE = _maxrate;
+      MINRATE = _minrate;
+      require( _rate >= MINRATE);
+      require( _rate <= MAXRATE);
       token.mint(_preminedOwner,_premined);
   }
 
@@ -36,8 +45,14 @@ contract OranguSale is CappedCrowdsale,Ownable {
   }
 
   function setRate(uint256 _rate) onlyOwner{
+    require( _rate >= MINRATE);
+    require( _rate <= MAXRATE);
     rate = _rate;
   }
 
+  function   () payable whenNotPaused  {
+    buyTokens(msg.sender);
+  }
+  
 
 }
