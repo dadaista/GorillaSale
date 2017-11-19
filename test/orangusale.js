@@ -45,7 +45,6 @@ const duration = {
   years:   function(val) { return val * this.days(365)}
 };
 
-const EVMThrow = 'invalid opcode';
 
 const BigNumber = web3.BigNumber;
 
@@ -54,6 +53,7 @@ function latestTime() {
   return web3.eth.getBlock('latest').timestamp;
 }
 
+// some constants to manage amounts
 const second     = 1;
 const day        = 86400 * second;
 const week       = day * 7;
@@ -128,7 +128,7 @@ contract('OranguSale', function ([owner, wallet, investor]) {
   });
 
 
-  it('should accept payments during the sale only if unpaused', async function () {
+  it('should accept payments and ship tokens at rate', async function () {
     const investmentAmount = 1*ether;
     const expectedTokenAmount = new BigNumber(this.rate * investmentAmount);
     let totalSupplyBefore = await this.token.totalSupply();
@@ -140,26 +140,64 @@ contract('OranguSale', function ([owner, wallet, investor]) {
     await this.crowdsale.buyTokens(investor, {value: investmentAmount, from: investor}).should.be.fulfilled;
 
     (await this.token.balanceOf(investor)).should.be.bignumber.equal(expectedTokenAmount);
-    (await this.token.totalSupply()).should.be.bignumber.equal(totalSupplyBefore.add(expectedTokenAmount));
 
+    (await this.token.balanceOf(investor)).should.be.bignumber.equal(expectedTokenAmount);
+    (await this.token.totalSupply()).should.be.bignumber.equal(totalSupplyBefore.add(expectedTokenAmount));
+  });
+
+
+  it('should reject payments during the sale if paused', async function () {
+    await increaseTimeTo(this.startTime); 
+    await this.crowdsale.send(1).should.be.fulfilled;
     await this.crowdsale.pause();
     (await this.crowdsale.paused()).should.be.equal(true);
+    await this.crowdsale.send(1).should.be.rejected;
+  });
 
-    //let resp = await this.crowdsale.send(investor, {value: investmentAmount, from: investor});
-    //console.log(resp);
-    await this.crowdsale.send(1).should.be.rejectedWith(EVMThrow);
+  it('should reject buyTokens tx during the sale if paused', async function () {
+    await increaseTimeTo(this.startTime); 
+    await this.crowdsale.buyTokens(investor, {value: 0.1*ether, from: investor}).should.be.fulfilled;
+    await this.crowdsale.pause();
+    (await this.crowdsale.paused()).should.be.equal(true);
+    await this.crowdsale.buyTokens(investor, {value: 0.1*ether, from: investor}).should.be.rejected;
+  });
 
-     
+  it('should increase the balance of wallet after a buy', async function () {
+    await increaseTimeTo(this.startTime); 
 
+    let oldBalance = await web3.eth.getBalance(wallet);
+    console.log("oldBalance:" + oldBalance);
+
+    await this.crowdsale.send(1*ether).should.be.fulfilled;
+    let newBalance = await web3.eth.getBalance(wallet);
+    console.log("newBalance:"+newBalance);
+    newBalance.should.be.bignumber.equal(oldBalance.add(1*ether)); 
 
   });
+
+
 
 
   it('should reject payments over cap', async function () {
     await increaseTimeTo(this.startTime);
     await this.crowdsale.send(this.cap);
-    await this.crowdsale.send(1).should.be.rejectedWith(EVMThrow);
+    await this.crowdsale.send(1).should.be.rejected;
   });
+
+  it('should change rate', async function () {
+    await increaseTimeTo(this.startTime);
+    await this.crowdsale.setRate(5);
+    (await this.crowdsale.rate()).should.be.bignumber.equal(5);
+  });
+
+
+  it('should reject change rate outside limits', async function () {
+    await increaseTimeTo(this.startTime);
+    await this.crowdsale.setRate(this.minrate - 1).should.be.rejected;
+    await this.crowdsale.setRate(this.maxrate + 1).should.be.rejected;
+    
+  });
+
 
 /*
   it('should not accept payments before start', async function () {

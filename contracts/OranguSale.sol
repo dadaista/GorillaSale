@@ -50,6 +50,11 @@ contract OranguSale is CappedCrowdsale,Ownable, Pausable {
     rate = _rate;
   }
 
+  //adding pause to super.buyTokens
+  function buyTokens(address beneficiary) public payable whenNotPaused{
+    super.buyTokens(beneficiary);
+  }
+
   function   () payable whenNotPaused  {
     buyTokens(msg.sender);
   }
