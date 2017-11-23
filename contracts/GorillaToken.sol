@@ -11,6 +11,6 @@ contract GorillaToken is MintableToken {
 
   string public constant name = "TokenPolis";
   string public constant symbol = "TPL";
-  uint8 public constant decimals = 18;
+  uint8 public constant decimals = 15;
 
 }

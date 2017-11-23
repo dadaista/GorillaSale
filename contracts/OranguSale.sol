@@ -58,6 +58,13 @@ contract OranguSale is CappedCrowdsale,Ownable, Pausable {
   function   () payable whenNotPaused  {
     buyTokens(msg.sender);
   }
+
+  //this function transfers the token contract ownership to sale owner
+  //this is dangerous, use only if a disaster happens with this sale
+  // and you want to take the contract safe out of it
+  function takeTokenContractOwnership() onlyOwner{
+    token.transferOwnership(owner);
+  }
   
 
 }

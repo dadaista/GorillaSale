@@ -212,6 +212,21 @@ contract('OranguSale', function ([owner, wallet, investor]) {
   });
 
 
+  it('should reject takeTokenContract from anyone other than sale owner', async function () {
+    await increaseTimeTo(this.startTime);
+    await this.crowdsale.takeTokenContractOwnership({from: investor}).should.be.rejected;
+  });
+
+  it('should do takeTokenContract from sale owner', async function () {
+    await increaseTimeTo(this.startTime);
+    await this.crowdsale.takeTokenContractOwnership({from: owner}).should.be.fulfilled;
+    (await this.token.owner()).should.be.equal(owner);
+    (await this.token.balanceOf(investor)).should.be.bignumber.equal(0);
+    await this.token.mint(investor,1).should.be.fulfilled;
+    (await this.token.balanceOf(investor)).should.be.bignumber.equal(1);
+
+  });
+
 /*
   it('should not accept payments before start', async function () {
     await this.crowdsale.send(ether(1)).should.be.rejectedWith(EVMThrow);
