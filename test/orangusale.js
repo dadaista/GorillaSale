@@ -190,11 +190,24 @@ contract('OranguSale', function ([owner, wallet, investor]) {
     (await this.crowdsale.rate()).should.be.bignumber.equal(5);
   });
 
+  it('should reject rate change from anyone not owner', async function () {
+    await increaseTimeTo(this.startTime);
+    await this.crowdsale.setRate(5,{from: investor}).should.be.rejected;
+
+  });
 
   it('should reject change rate outside limits', async function () {
     await increaseTimeTo(this.startTime);
     await this.crowdsale.setRate(this.minrate - 1).should.be.rejected;
     await this.crowdsale.setRate(this.maxrate + 1).should.be.rejected;
+    
+  });
+
+
+  it('should reject mint request from anyone because the sale owns the token contract', async function () {
+    await increaseTimeTo(this.startTime);
+    await this.token.mint(owner,1000).should.be.rejected;
+    await this.token.mint(owner,1000, {from: investor}).should.be.rejected;
     
   });
 

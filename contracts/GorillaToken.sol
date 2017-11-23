@@ -9,8 +9,8 @@ import "zeppelin-solidity/contracts/token/MintableToken.sol";
  */
 contract GorillaToken is MintableToken {
 
-  string public constant name = "Orangu6";
-  string public constant symbol = "GR6";
-  uint8 public constant decimals = 15;
+  string public constant name = "TokenPolis";
+  string public constant symbol = "TPL";
+  uint8 public constant decimals = 18;
 
 }
