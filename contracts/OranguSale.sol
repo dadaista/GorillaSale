@@ -28,7 +28,7 @@ contract OranguSale is CappedCrowdsale,Ownable, Pausable {
                            address _wallet,
                            address _preminedOwner,
                            uint256 _cap,
-			                     uint256 _premined)
+			                     uint256 _premined) public
   
   CappedCrowdsale(_cap)
   Crowdsale(_time_start, _time_end, _rate, _wallet)
@@ -44,7 +44,7 @@ contract OranguSale is CappedCrowdsale,Ownable, Pausable {
     return new GorillaToken();
   }
 
-  function setRate(uint256 _rate) onlyOwner{
+  function setRate(uint256 _rate) onlyOwner public{
     require( _rate >= MINRATE);
     require( _rate <= MAXRATE);
     rate = _rate;
@@ -55,14 +55,14 @@ contract OranguSale is CappedCrowdsale,Ownable, Pausable {
     super.buyTokens(beneficiary);
   }
 
-  function   () payable whenNotPaused  {
+  function   () payable external whenNotPaused  {
     buyTokens(msg.sender);
   }
 
   //this function transfers the token contract ownership to sale owner
   //this is dangerous, use only if a disaster happens with this sale
   // and you want to take the contract safe out of it
-  function takeTokenContractOwnership() onlyOwner{
+  function takeTokenContractOwnership() onlyOwner public{
     token.transferOwnership(owner);
   }
   
