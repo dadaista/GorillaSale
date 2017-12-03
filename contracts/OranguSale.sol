@@ -3,7 +3,7 @@ pragma solidity ^0.4.15;
 import "zeppelin-solidity/contracts/crowdsale/CappedCrowdsale.sol";
 import "zeppelin-solidity/contracts/ownership/Ownable.sol";
 import "zeppelin-solidity/contracts/lifecycle/Pausable.sol";
-import "./GorillaToken.sol";
+import "./OranguToken.sol";
 
 
 /**
@@ -41,7 +41,7 @@ contract OranguSale is CappedCrowdsale,Ownable, Pausable {
   }
 
   function createTokenContract() internal returns (MintableToken) {
-    return new GorillaToken();
+    return new OranguToken();
   }
 
   function setRate(uint256 _rate) onlyOwner public{

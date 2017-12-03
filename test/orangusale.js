@@ -69,7 +69,7 @@ const should = require('chai')
   .should();
 
 const OranguSale = artifacts.require('./OranguSale.sol');
-const GorillaToken = artifacts.require('./GorillaToken.sol');
+const OranguToken = artifacts.require('./OranguToken.sol');
 
 contract('OranguSale', function ([owner, wallet, investor]) {
 
@@ -84,11 +84,11 @@ contract('OranguSale', function ([owner, wallet, investor]) {
     this.rate = 3; //tokens per wei (espressed in smallest fractional units)
     this.maxrate = 6;
     this.minrate = 2;
-    this.cap = 10*ether; //10 ether
+    this.cap = 2*ether; //2 ether
     this.preminedOwner=owner;
     this.premined = 13 * gorilla;
 
-
+console.log("*******");
     this.crowdsale = await OranguSale.new(this.startTime, 
                                           this.endTime, 
                                           this.rate, 
@@ -100,7 +100,8 @@ contract('OranguSale', function ([owner, wallet, investor]) {
                                           this.premined);
 
 
-    this.token = GorillaToken.at(await this.crowdsale.token());
+    this.token      = OranguToken.at(await this.crowdsale.token());
+    this.max_supply = await this.token.cap();
 
   });
 
@@ -131,6 +132,7 @@ contract('OranguSale', function ([owner, wallet, investor]) {
   it('should accept payments and ship tokens at rate', async function () {
     const investmentAmount = 1*ether;
     const expectedTokenAmount = new BigNumber(this.rate * investmentAmount);
+    console.log("expectedTokenAmount:"+expectedTokenAmount);
     let totalSupplyBefore = await this.token.totalSupply();
 
     (await this.crowdsale.paused()).should.be.equal(false);
