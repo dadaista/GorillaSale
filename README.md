@@ -9,11 +9,11 @@ Simple eth tokensales based on Open Zeppelin
 # Pre-requisites
 This has been tested on Ubuntu 14.04, but I'm confident can work on other OS as well.
 ```
-Truffle v3.4.11 (core: 3.4.11) with Solidity v0.4.15 (solc-js)
-Open zeppelin 1.3.0
+Truffle v4.0.1 (core: 4.0.1) with Solidity v0.4.18 (solc-js)
+Open zeppelin 1.4.0
 Geth 1.7.2-stable-1db4ecdc
 EthereumJS TestRPC v6.0.3 (ganache-core: 2.0.2)
-Ethereum Wallet V 0.9.2 (optional, to mess around with transactions and UI)
+Node js version 8.9.1
 ```
 
 # My stack
@@ -22,14 +22,14 @@ I launched Ubuntu 14.04 VM on Parallels/MacOsX. In my MAC I have also Chrome wit
 Tested also on Ubuntu 16.04
 
 
-# Install openzeppelin
+# Install modules
 
 Get into the root folder of your project and launch
 
 ```
-npm install zeppelin-solidity
+npm install
 ```
-beware tested with Open Zeppelin 1.3.0
+beware this should install Open Zeppelin 1.4.0 too
 
 
 
